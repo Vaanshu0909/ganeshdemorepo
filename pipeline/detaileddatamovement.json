@@ -84,6 +84,30 @@
 						"type": "BinaryReadSettings"
 					}
 				}
+			},
+			{
+				"name": "FilterFileNames",
+				"description": "FilterFileNames",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "Get MetadataForFileNames",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get MetadataForFileNames').output.childItems",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(item().name,'customer.csv')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
