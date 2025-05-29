@@ -4,48 +4,6 @@
 		"description": "customer,order,payment",
 		"activities": [
 			{
-				"name": "Lookup1",
-				"type": "Lookup",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
-					},
-					"dataset": {
-						"referenceName": "Lookup_Dataset",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": {
-								"value": "@pipeline().parameters.lookupdatasourcecontainer",
-								"type": "Expression"
-							},
-							"folder": {
-								"value": "@pipeline().parameters.lookupdatasourceFolder",
-								"type": "Expression"
-							}
-						}
-					}
-				}
-			},
-			{
 				"name": "Get MetadataForFileNames",
 				"description": "FileNames",
 				"type": "GetMetadata",
@@ -128,10 +86,49 @@
 				"typeProperties": {
 					"variableName": "CustFileName",
 					"value": {
-						"value": "@activity('FilterFileNames').output",
+						"value": "@first(activity('FilterFileNames').output.value).name",
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "saveFileName",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "copycustfilesource",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"parameters": {
