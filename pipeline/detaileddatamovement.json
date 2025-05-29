@@ -29,7 +29,17 @@
 					},
 					"dataset": {
 						"referenceName": "Lookup_Dataset",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.lookupdatasourcecontainer",
+								"type": "Expression"
+							},
+							"folder": {
+								"value": "@pipeline().parameters.lookupdatasourceFolder",
+								"type": "Expression"
+							}
+						}
 					}
 				}
 			}
