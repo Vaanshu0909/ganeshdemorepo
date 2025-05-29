@@ -206,6 +206,12 @@
 							"FileName": "*.csv"
 						}
 					},
+					"logStorageSettings": {
+						"linkedServiceName": {
+							"referenceName": "blobstrg",
+							"type": "LinkedServiceReference"
+						}
+					},
 					"enableLogging": true,
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
