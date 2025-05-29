@@ -82,6 +82,12 @@
 										"type": "BinaryReadSettings"
 									}
 								},
+								"sink": {
+									"type": "BinarySink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									}
+								},
 								"enableStaging": false
 							},
 							"inputs": [
@@ -96,8 +102,18 @@
 										"Folder": {
 											"value": "@pipeline().parameters.SourceFolderName",
 											"type": "Expression"
+										},
+										"Name": {
+											"value": "@equals(item().name,'customer.csv')",
+											"type": "Expression"
 										}
 									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "copysyncDatasetCustomer",
+									"type": "DatasetReference"
 								}
 							]
 						}
