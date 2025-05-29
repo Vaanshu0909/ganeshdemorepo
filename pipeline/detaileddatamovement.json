@@ -53,7 +53,13 @@
 				"type": "string",
 				"defaultValue": "csv"
 			},
-			"FileName": {
+			"CustomerFileName": {
+				"type": "string"
+			},
+			"OrderFileName": {
+				"type": "string"
+			},
+			"PaymentFileName": {
 				"type": "string"
 			}
 		},
