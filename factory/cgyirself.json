@@ -1,0 +1,9 @@
+{
+	"name": "cgyirself",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "ec6a52e3-b8da-4fd0-8db1-8828602b3dab",
+		"tenantId": "fbc4112b-b6eb-44fe-8bcb-9d1b6ea4f1ec"
+	}
+}
