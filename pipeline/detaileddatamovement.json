@@ -108,6 +108,30 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "saveFileName",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "FilterFileNames",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "CustFileName",
+					"value": {
+						"value": "@activity('FilterFileNames').output",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
@@ -127,6 +151,11 @@
 			},
 			"PaymentFileName": {
 				"type": "string"
+			}
+		},
+		"variables": {
+			"CustFileName": {
+				"type": "String"
 			}
 		},
 		"annotations": []
