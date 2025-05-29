@@ -126,7 +126,21 @@
 				"inputs": [
 					{
 						"referenceName": "copycustfilesource",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.lookupdatasourcecontainer",
+								"type": "Expression"
+							},
+							"folder": {
+								"value": "@pipeline().parameters.lookupdatasourceFolder",
+								"type": "Expression"
+							},
+							"file": {
+								"value": "@variables('CustFileName')",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
