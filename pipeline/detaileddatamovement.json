@@ -1,0 +1,52 @@
+{
+	"name": "detaileddatamovement",
+	"properties": {
+		"description": "customer,order,payment",
+		"activities": [
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "Lookup_Dataset",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"lookupdatasourcecontainer": {
+				"type": "string",
+				"defaultValue": "input"
+			},
+			"lookupdatasourceFolder": {
+				"type": "string",
+				"defaultValue": "csv"
+			},
+			"FileName": {
+				"type": "string"
+			}
+		},
+		"annotations": []
+	}
+}
