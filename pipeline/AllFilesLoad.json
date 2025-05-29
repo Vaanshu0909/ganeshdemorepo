@@ -113,7 +113,21 @@
 							"outputs": [
 								{
 									"referenceName": "copysyncDatasetCustomer",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"Container": {
+											"value": "@pipeline().parameters.ContainerName",
+											"type": "Expression"
+										},
+										"Folder": {
+											"value": "@pipeline().parameters.SyncFolder",
+											"type": "Expression"
+										},
+										"CustomerFileName": {
+											"value": "@pipeline().parameters.CustomerFileName",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
@@ -129,6 +143,14 @@
 			"SourceFolderName": {
 				"type": "String",
 				"defaultValue": "csv"
+			},
+			"SyncFolder": {
+				"type": "string",
+				"defaultValue": "copycsv"
+			},
+			"CustomerFileName": {
+				"type": "string",
+				"defaultValue": "customer"
 			}
 		},
 		"annotations": []
