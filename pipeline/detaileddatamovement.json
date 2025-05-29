@@ -1,0 +1,258 @@
+{
+	"name": "detaileddatamovement",
+	"properties": {
+		"description": "customer,order,payment",
+		"activities": [
+			{
+				"name": "Get MetadataForFileNames",
+				"description": "FileNames",
+				"type": "GetMetadata",
+				"dependsOn": [
+					{
+						"activity": "Deleteiffileexists",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 2,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "GetFileNamesdataset",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": {
+								"value": "@pipeline().parameters.lookupdatasourcecontainer",
+								"type": "Expression"
+							},
+							"Folder": {
+								"value": "@pipeline().parameters.lookupdatasourceFolder",
+								"type": "Expression"
+							}
+						}
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "BinaryReadSettings"
+					}
+				}
+			},
+			{
+				"name": "FilterFileNames",
+				"description": "FilterFileNames",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "Get MetadataForFileNames",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get MetadataForFileNames').output.childItems",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(item().name,'customer.csv')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "saveFileName",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "FilterFileNames",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "CustFileName",
+					"value": {
+						"value": "@first(activity('FilterFileNames').output.value).name",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "saveFileName",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "copycustfilesource",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.lookupdatasourcecontainer",
+								"type": "Expression"
+							},
+							"folder": {
+								"value": "@pipeline().parameters.lookupdatasourceFolder",
+								"type": "Expression"
+							},
+							"file": {
+								"value": "@variables('CustFileName')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "syncblobcustfiledatadest",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.lookupdatasourcecontainer",
+								"type": "Expression"
+							},
+							"Folder": {
+								"value": "@pipeline().parameters.syncfileFolder",
+								"type": "Expression"
+							},
+							"FileName": {
+								"value": "@pipeline().parameters.syncFileName",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Deleteiffileexists",
+				"description": "Deleteiffileexists",
+				"type": "Delete",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DeleteIfFileExists",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": {
+								"value": "@pipeline().parameters.lookupdatasourcecontainer",
+								"type": "Expression"
+							},
+							"Folder": {
+								"value": "@pipeline().parameters.syncfileFolder",
+								"type": "Expression"
+							},
+							"FileName": "*.csv"
+						}
+					},
+					"logStorageSettings": {
+						"linkedServiceName": {
+							"referenceName": "blobstrg",
+							"type": "LinkedServiceReference"
+						}
+					},
+					"enableLogging": true,
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					}
+				}
+			}
+		],
+		"parameters": {
+			"lookupdatasourcecontainer": {
+				"type": "string",
+				"defaultValue": "input"
+			},
+			"lookupdatasourceFolder": {
+				"type": "string",
+				"defaultValue": "csv"
+			},
+			"CustomerFileName": {
+				"type": "string"
+			},
+			"OrderFileName": {
+				"type": "string"
+			},
+			"PaymentFileName": {
+				"type": "string"
+			},
+			"syncfileFolder": {
+				"type": "string",
+				"defaultValue": "custcsv"
+			},
+			"syncFileName": {
+				"type": "string",
+				"defaultValue": "cust"
+			}
+		},
+		"variables": {
+			"CustFileName": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
