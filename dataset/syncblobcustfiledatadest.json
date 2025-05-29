@@ -1,0 +1,16 @@
+{
+	"name": "syncblobcustfiledatadest",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blobstrg",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation"
+			}
+		}
+	}
+}
