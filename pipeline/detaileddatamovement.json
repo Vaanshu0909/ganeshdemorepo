@@ -193,7 +193,18 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DeleteIfFileExists",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": {
+								"value": "@pipeline().parameters.lookupdatasourcecontainer",
+								"type": "Expression"
+							},
+							"Folder": {
+								"value": "@pipeline().parameters.syncfileFolder",
+								"type": "Expression"
+							},
+							"FileName": "*.csv"
+						}
 					},
 					"enableLogging": true,
 					"storeSettings": {
