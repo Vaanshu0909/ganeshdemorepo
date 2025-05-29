@@ -152,7 +152,21 @@
 				"outputs": [
 					{
 						"referenceName": "syncblobcustfiledatadest",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.lookupdatasourcecontainer",
+								"type": "Expression"
+							},
+							"Folder": {
+								"value": "@pipeline().parameters.syncfileFolder",
+								"type": "Expression"
+							},
+							"FileName": {
+								"value": "@pipeline().parameters.syncFileName",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
