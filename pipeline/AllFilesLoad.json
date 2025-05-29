@@ -87,7 +87,17 @@
 							"inputs": [
 								{
 									"referenceName": "CopyDatasetCustomer",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"Container": {
+											"value": "@pipeline().parameters.ContainerName",
+											"type": "Expression"
+										},
+										"Folder": {
+											"value": "@pipeline().parameters.SourceFolderName",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
