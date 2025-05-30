@@ -16,13 +16,14 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "BinarySource",
+						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
-							"recursive": true
+							"recursive": true,
+							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
-							"type": "BinaryReadSettings"
+							"type": "DelimitedTextReadSettings"
 						}
 					},
 					"sink": {
@@ -30,26 +31,20 @@
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
-						"referenceName": "azuresqlsourcefiledataset",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": {
-								"value": "@pipeline().parameters.container",
-								"type": "Expression"
-							},
-							"folder": {
-								"value": "@pipeline().parameters.folder",
-								"type": "Expression"
-							},
-							"filename": {
-								"value": "@pipeline().parameters.filename",
-								"type": "Expression"
-							}
-						}
+						"referenceName": "azuresqlloaddatasetsourcefile",
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
