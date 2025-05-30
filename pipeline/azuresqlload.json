@@ -35,6 +35,20 @@
 				]
 			}
 		],
+		"parameters": {
+			"container": {
+				"type": "string",
+				"defaultValue": "input"
+			},
+			"folder": {
+				"type": "string",
+				"defaultValue": "custcsv"
+			},
+			"filename": {
+				"type": "string",
+				"defaultValue": "employee_details.csv"
+			}
+		},
 		"annotations": []
 	}
 }
