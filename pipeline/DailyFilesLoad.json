@@ -120,7 +120,21 @@
 							"outputs": [
 								{
 									"referenceName": "CopyFilestoSyncFolderDataset",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"Container": {
+											"value": "@pipeline().parameters.Container",
+											"type": "Expression"
+										},
+										"SyncFolder": {
+											"value": "@pipeline().parameters.SyncFolder",
+											"type": "Expression"
+										},
+										"FileName": {
+											"value": "@concat('copy_',item().name,'_',utcNow(),'.csv')",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
