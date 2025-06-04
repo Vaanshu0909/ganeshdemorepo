@@ -47,7 +47,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Get Source File Names",
+						"activity": "Set variables",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -56,7 +56,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Source File Names').output.childItems",
+						"value": "@variables('FileNames')",
 						"type": "Expression"
 					},
 					"batchCount": 3,
@@ -201,42 +201,6 @@
 						"TriggerType": {
 							"value": {
 								"value": "@pipeline().TriggerType",
-								"type": "Expression"
-							},
-							"type": "String"
-						}
-					}
-				},
-				"linkedServiceName": {
-					"referenceName": "LsSSMS",
-					"type": "LinkedServiceReference"
-				}
-			},
-			{
-				"name": "File_Log",
-				"type": "SqlServerStoredProcedure",
-				"dependsOn": [
-					{
-						"activity": "Load Each File",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"storedProcedureName": "[dbo].[File_log]",
-					"storedProcedureParameters": {
-						"FileName": {
-							"value": {
-								"value": "@activity('Get Source File Names').output.childItems",
 								"type": "Expression"
 							},
 							"type": "String"
