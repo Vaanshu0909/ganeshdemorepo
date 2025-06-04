@@ -63,7 +63,8 @@
 						"value": "@activity('GetFileNames').output.childItems",
 						"type": "Expression"
 					},
-					"isSequential": true,
+					"isSequential": false,
+					"batchCount": 3,
 					"activities": [
 						{
 							"name": "Copy data1",
@@ -107,11 +108,11 @@
 											"type": "Expression"
 										},
 										"FileName": {
-											"value": "@pipeline().parameters.StorageFolder",
+											"value": "@item().name",
 											"type": "Expression"
 										},
 										"Folder": {
-											"value": "@item().name",
+											"value": "@pipeline().parameters.StorageFolder",
 											"type": "Expression"
 										}
 									}
