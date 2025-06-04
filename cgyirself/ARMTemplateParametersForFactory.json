@@ -31,6 +31,15 @@
 		},
 		"LsSSMS_properties_typeProperties_userName": {
 			"value": "sa"
+		},
+		"LoaddatatoTables_properties_DailySalesLoadtoTables_parameters_Container": {
+			"value": "input"
+		},
+		"LoaddatatoTables_properties_DailySalesLoadtoTables_parameters_Folder": {
+			"value": "csv"
+		},
+		"LoaddatatoTables_properties_DailySalesLoadtoTables_parameters_Schmename": {
+			"value": "dbo"
 		}
 	}
 }

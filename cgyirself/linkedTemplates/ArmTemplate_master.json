@@ -43,6 +43,18 @@
 			"type": "string",
 			"defaultValue": "sa"
 		},
+		"LoaddatatoTables_properties_DailySalesLoadtoTables_parameters_Container": {
+			"type": "string",
+			"defaultValue": "input"
+		},
+		"LoaddatatoTables_properties_DailySalesLoadtoTables_parameters_Folder": {
+			"type": "string",
+			"defaultValue": "csv"
+		},
+		"LoaddatatoTables_properties_DailySalesLoadtoTables_parameters_Schmename": {
+			"type": "string",
+			"defaultValue": "dbo"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -96,6 +108,15 @@
 					},
 					"LsSSMS_properties_typeProperties_userName": {
 						"value": "[parameters('LsSSMS_properties_typeProperties_userName')]"
+					},
+					"LoaddatatoTables_properties_DailySalesLoadtoTables_parameters_Container": {
+						"value": "[parameters('LoaddatatoTables_properties_DailySalesLoadtoTables_parameters_Container')]"
+					},
+					"LoaddatatoTables_properties_DailySalesLoadtoTables_parameters_Folder": {
+						"value": "[parameters('LoaddatatoTables_properties_DailySalesLoadtoTables_parameters_Folder')]"
+					},
+					"LoaddatatoTables_properties_DailySalesLoadtoTables_parameters_Schmename": {
+						"value": "[parameters('LoaddatatoTables_properties_DailySalesLoadtoTables_parameters_Schmename')]"
 					}
 				}
 			},
