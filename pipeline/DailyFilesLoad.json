@@ -130,6 +130,10 @@
 										"Folder": {
 											"value": "@pipeline().parameters.SyncFolder",
 											"type": "Expression"
+										},
+										"FileNames": {
+											"value": "@concat('copy_',item().name,'_',utcNow(),'.csv')",
+											"type": "Expression"
 										}
 									}
 								}
