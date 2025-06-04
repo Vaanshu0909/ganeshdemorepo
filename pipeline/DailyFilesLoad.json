@@ -88,11 +88,37 @@
 										"type": "BinaryReadSettings"
 									}
 								},
+								"sink": {
+									"type": "BinarySink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									}
+								},
 								"enableStaging": false
 							},
 							"inputs": [
 								{
 									"referenceName": "DailyLoadCopySourceDataset",
+									"type": "DatasetReference",
+									"parameters": {
+										"Container": {
+											"value": "@pipeline().parameters.Container",
+											"type": "Expression"
+										},
+										"FileName": {
+											"value": "@pipeline().parameters.StorageFolder",
+											"type": "Expression"
+										},
+										"Folder": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DailySalesSyncCopyDataset",
 									"type": "DatasetReference"
 								}
 							]
