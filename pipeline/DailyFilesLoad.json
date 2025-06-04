@@ -94,7 +94,21 @@
 							"inputs": [
 								{
 									"referenceName": "DailyFilesLoadSourceCopyDataset",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"Container": {
+											"value": "@pipeline().parameters.Container",
+											"type": "Expression"
+										},
+										"Folder": {
+											"value": "@pipeline().parameters.StorageFolder",
+											"type": "Expression"
+										},
+										"FileName": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
