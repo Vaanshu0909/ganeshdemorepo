@@ -39,11 +39,32 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
 						"type": "BinaryReadSettings"
 					}
+				}
+			},
+			{
+				"name": "LoadEachFile",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "GetFileNames",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('GetFileNames').output.childItems",
+						"type": "Expression"
+					},
+					"batchCount": 3
 				}
 			}
 		],
