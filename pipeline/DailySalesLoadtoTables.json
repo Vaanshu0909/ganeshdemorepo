@@ -87,11 +87,7 @@
 								"sink": {
 									"type": "SqlServerSink",
 									"writeBehavior": "insert",
-									"sqlWriterUseTableLock": false,
-									"tableOption": {
-										"value": "@item().name",
-										"type": "Expression"
-									}
+									"sqlWriterUseTableLock": false
 								},
 								"enableStaging": false,
 								"translator": {
@@ -142,6 +138,10 @@
 			"Folder": {
 				"type": "string",
 				"defaultValue": "csv"
+			},
+			"Schmename": {
+				"type": "string",
+				"defaultValue": "dbo"
 			}
 		},
 		"annotations": []
