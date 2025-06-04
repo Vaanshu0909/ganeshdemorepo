@@ -126,7 +126,8 @@
 				"defaultValue": "csv"
 			},
 			"SyncFolder": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "CopyFiles"
 			}
 		},
 		"variables": {
