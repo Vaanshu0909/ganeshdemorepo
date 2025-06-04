@@ -1,0 +1,42 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "cgyirself"
+		},
+		"AzureSqlDatabase_password": {
+			"value": ""
+		},
+		"LsSSMS_password": {
+			"value": ""
+		},
+		"blobstrg_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase_properties_typeProperties_server": {
+			"value": "vaanshuazuresqlserver.database.windows.net"
+		},
+		"AzureSqlDatabase_properties_typeProperties_database": {
+			"value": "vaanshu"
+		},
+		"AzureSqlDatabase_properties_typeProperties_userName": {
+			"value": "ganesh"
+		},
+		"LsSSMS_properties_typeProperties_server": {
+			"value": "DESKTOP-8OTJPKL\\CHUKKASQLSERVER"
+		},
+		"LsSSMS_properties_typeProperties_database": {
+			"value": "azurelink"
+		},
+		"LsSSMS_properties_typeProperties_userName": {
+			"value": "sa"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
