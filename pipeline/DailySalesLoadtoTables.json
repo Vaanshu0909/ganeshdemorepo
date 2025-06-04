@@ -165,7 +165,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[Pipeline_Log]",
+					"storedProcedureName": "[dbo].[piplne_Log]",
 					"storedProcedureParameters": {
 						"DataFactoryName": {
 							"value": {
