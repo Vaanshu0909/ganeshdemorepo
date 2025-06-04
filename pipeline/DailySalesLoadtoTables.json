@@ -87,7 +87,11 @@
 								"sink": {
 									"type": "SqlServerSink",
 									"writeBehavior": "insert",
-									"sqlWriterUseTableLock": false
+									"sqlWriterUseTableLock": false,
+									"tableOption": {
+										"value": "@item().name",
+										"type": "Expression"
+									}
 								},
 								"enableStaging": false,
 								"translator": {
@@ -122,13 +126,7 @@
 							"outputs": [
 								{
 									"referenceName": "DailyFilesLoadtoTablesSyncDataset",
-									"type": "DatasetReference",
-									"parameters": {
-										"TableName": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							]
 						}
