@@ -58,7 +58,41 @@
 						"value": "@activity('Get Source File Names').output.childItems",
 						"type": "Expression"
 					},
-					"batchCount": 3
+					"batchCount": 3,
+					"activities": [
+						{
+							"name": "Copy data from source to tables",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "BinarySource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true
+									},
+									"formatSettings": {
+										"type": "BinaryReadSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "DailyFilesCopyActSourceDataset",
+									"type": "DatasetReference"
+								}
+							]
+						}
+					]
 				}
 			}
 		],
