@@ -1,0 +1,160 @@
+{
+	"name": "DailySalesLoadtoTables",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Source File Names",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 4,
+					"retryIntervalInSeconds": 60,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DailyFilesgetmetadadatsourcedataset",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": {
+								"value": "@pipeline().parameters.Container",
+								"type": "Expression"
+							},
+							"Folder": {
+								"value": "@pipeline().parameters.Folder",
+								"type": "Expression"
+							}
+						}
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "BinaryReadSettings"
+					}
+				}
+			},
+			{
+				"name": "Load Each File",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get Source File Names",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Source File Names').output.childItems",
+						"type": "Expression"
+					},
+					"batchCount": 3,
+					"activities": [
+						{
+							"name": "Copy data from source to tables",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "SqlServerSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false,
+									"tableOption": "autoCreate"
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DailyLoadCopySourcedatasettable",
+									"type": "DatasetReference",
+									"parameters": {
+										"container": {
+											"value": "@pipeline().parameters.Container",
+											"type": "Expression"
+										},
+										"Folder": {
+											"value": "@pipeline().parameters.Folder",
+											"type": "Expression"
+										},
+										"Filename": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DailyFilesLoadtoTablesSyncDataset",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": {
+											"value": "@concat(replace(item().name, '.csv', ''),'_stage')",
+											"type": "Expression"
+										},
+										"schemaname": {
+											"value": "@pipeline().parameters.Schmename",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"Container": {
+				"type": "string",
+				"defaultValue": "input"
+			},
+			"Folder": {
+				"type": "string",
+				"defaultValue": "csv"
+			},
+			"Schmename": {
+				"type": "string",
+				"defaultValue": "dbo"
+			}
+		},
+		"annotations": []
+	}
+}
