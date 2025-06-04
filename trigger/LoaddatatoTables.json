@@ -1,0 +1,30 @@
+{
+	"name": "LoaddatatoTables",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "DailySalesLoadtoTables",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"Container": "input",
+					"Folder": "csv",
+					"Schmename": "dbo"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 10,
+				"startTime": "2025-06-04T12:00:00",
+				"endTime": "2025-06-05T12:00:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}
