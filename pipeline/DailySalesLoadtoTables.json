@@ -289,7 +289,7 @@
 		},
 		"variables": {
 			"FileNames": {
-				"type": "String"
+				"type": "Array"
 			}
 		},
 		"annotations": []
