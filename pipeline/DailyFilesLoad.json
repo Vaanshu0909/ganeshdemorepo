@@ -44,10 +44,12 @@
 		],
 		"parameters": {
 			"Container": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "input"
 			},
 			"StorageFolder": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "csv"
 			}
 		},
 		"variables": {
