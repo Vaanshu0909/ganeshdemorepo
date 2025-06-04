@@ -83,6 +83,11 @@
 										"type": "BinaryReadSettings"
 									}
 								},
+								"sink": {
+									"type": "SqlServerSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false
+								},
 								"enableStaging": false
 							},
 							"inputs": [
@@ -103,6 +108,12 @@
 											"type": "Expression"
 										}
 									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DailyFilesLoadtoTablesSyncDataset",
+									"type": "DatasetReference"
 								}
 							]
 						}
