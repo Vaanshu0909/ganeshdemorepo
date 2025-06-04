@@ -91,7 +91,8 @@
 								"sink": {
 									"type": "BinarySink",
 									"storeSettings": {
-										"type": "AzureBlobStorageWriteSettings"
+										"type": "AzureBlobStorageWriteSettings",
+										"copyBehavior": "FlattenHierarchy"
 									}
 								},
 								"enableStaging": false
@@ -119,7 +120,17 @@
 							"outputs": [
 								{
 									"referenceName": "DailySalesSyncCopyDataset",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"Container": {
+											"value": "@pipeline().parameters.Container",
+											"type": "Expression"
+										},
+										"Folder": {
+											"value": "@pipeline().parameters.SyncFolder",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
@@ -135,6 +146,10 @@
 			"StorageFolder": {
 				"type": "string",
 				"defaultValue": "csv"
+			},
+			"SyncFolder": {
+				"type": "string",
+				"defaultValue": "Syncfolder"
 			}
 		},
 		"variables": {
