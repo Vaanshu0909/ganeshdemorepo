@@ -122,7 +122,17 @@
 							"outputs": [
 								{
 									"referenceName": "DailyFilesLoadtoTablesSyncDataset",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": {
+											"value": "@item().name",
+											"type": "Expression"
+										},
+										"schemaname": {
+											"value": "@pipeline().parameters.Schmename",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
