@@ -105,7 +105,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DailyLoadCopySourcedataset",
+									"referenceName": "DailyLoadCopySourcedatasettable",
 									"type": "DatasetReference",
 									"parameters": {
 										"container": {

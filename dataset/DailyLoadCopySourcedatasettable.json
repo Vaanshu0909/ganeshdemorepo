@@ -1,5 +1,5 @@
 {
-	"name": "DailyLoadCopySourcedataset",
+	"name": "DailyLoadCopySourcedatasettable",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "blobstrg",
