@@ -235,6 +235,70 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "lookdata",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "LookupDataset",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.Container",
+								"type": "Expression"
+							},
+							"Folder": {
+								"value": "@pipeline().parameters.Folder",
+								"type": "Expression"
+							},
+							"FileName": "customer_04062025.csv"
+						}
+					}
+				}
+			},
+			{
+				"name": "filterlatestfiles",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "lookdata",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('lookdata').output.firstRow",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(item().name,'jeffreydoyle@hotmail.com' )",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
@@ -249,6 +313,14 @@
 			"Schmename": {
 				"type": "string",
 				"defaultValue": "dbo"
+			},
+			"FileNames": {
+				"type": "array",
+				"defaultValue": [
+					"Customer*",
+					"Order*",
+					"Payment*"
+				]
 			}
 		},
 		"variables": {
