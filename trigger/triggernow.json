@@ -11,7 +11,8 @@
 				},
 				"parameters": {
 					"Container": "input",
-					"StorageFolder": "csv"
+					"StorageFolder": "csv",
+					"SyncFolder": "Syncfolder"
 				}
 			}
 		],
