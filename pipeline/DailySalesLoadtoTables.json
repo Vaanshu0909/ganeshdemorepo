@@ -126,7 +126,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"TableName": {
-											"value": "@replace(item().name, '.csv', '')",
+											"value": "@concat(item().name, '.csv', '','_stage')",
 											"type": "Expression"
 										},
 										"schemaname": {
