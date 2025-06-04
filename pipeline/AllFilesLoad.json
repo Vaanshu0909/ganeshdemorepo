@@ -1,0 +1,158 @@
+{
+	"name": "AllFilesLoad",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "GetFileNamesData",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": {
+								"value": "@pipeline().parameters.ContainerName",
+								"type": "Expression"
+							},
+							"Folder": {
+								"value": "@pipeline().parameters.SourceFolderName",
+								"type": "Expression"
+							}
+						}
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "BinaryReadSettings"
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata1').output.childItems",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "CopyCustomerData",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "BinarySource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true
+									},
+									"formatSettings": {
+										"type": "BinaryReadSettings"
+									}
+								},
+								"sink": {
+									"type": "BinarySink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "CopyDatasetCustomer",
+									"type": "DatasetReference",
+									"parameters": {
+										"Container": {
+											"value": "@pipeline().parameters.ContainerName",
+											"type": "Expression"
+										},
+										"Folder": {
+											"value": "@pipeline().parameters.SourceFolderName",
+											"type": "Expression"
+										},
+										"Name": {
+											"value": "@equals(item().name,'customer.csv')",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "copysyncDatasetCustomer",
+									"type": "DatasetReference",
+									"parameters": {
+										"Container": {
+											"value": "@pipeline().parameters.ContainerName",
+											"type": "Expression"
+										},
+										"Folder": {
+											"value": "@pipeline().parameters.SyncFolder",
+											"type": "Expression"
+										},
+										"CustomerFileName": {
+											"value": "@pipeline().parameters.CustomerFileName",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"ContainerName": {
+				"type": "String",
+				"defaultValue": "input"
+			},
+			"SourceFolderName": {
+				"type": "String",
+				"defaultValue": "csv"
+			},
+			"SyncFolder": {
+				"type": "string",
+				"defaultValue": "copycsv"
+			},
+			"CustomerFileName": {
+				"type": "string",
+				"defaultValue": "customer"
+			}
+		},
+		"annotations": []
+	}
+}
