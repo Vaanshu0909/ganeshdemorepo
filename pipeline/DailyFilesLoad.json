@@ -76,6 +76,9 @@
 			"StorageFolder": {
 				"type": "string",
 				"defaultValue": "csv"
+			},
+			"SyncFolder": {
+				"type": "string"
 			}
 		},
 		"variables": {
