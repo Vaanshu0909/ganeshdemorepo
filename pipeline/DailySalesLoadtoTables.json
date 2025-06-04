@@ -247,6 +247,30 @@
 					"referenceName": "LsSSMS",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "Set variables",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Get Source File Names",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "FileNames",
+					"value": {
+						"value": "@activity('Get Source File Names').output.childItems",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
@@ -261,6 +285,11 @@
 			"Schmename": {
 				"type": "string",
 				"defaultValue": "dbo"
+			}
+		},
+		"variables": {
+			"FileNames": {
+				"type": "String"
 			}
 		},
 		"annotations": []
