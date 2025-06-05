@@ -14,11 +14,19 @@
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
-				"frequency": "Minute",
-				"interval": 15,
+				"frequency": "Day",
+				"interval": 1,
 				"startTime": "2025-06-04T11:43:00",
 				"endTime": "2025-06-05T06:08:00",
-				"timeZone": "India Standard Time"
+				"timeZone": "India Standard Time",
+				"schedule": {
+					"minutes": [
+						1
+					],
+					"hours": [
+						1
+					]
+				}
 			}
 		}
 	}
