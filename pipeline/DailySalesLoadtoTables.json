@@ -127,7 +127,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"TableName": {
-											"value": "@concat(split(replace(item().name, '.csv', ''), '_')[0], '_stg')\n",
+											"value": "@concat(split(replace(item().name, '.csv', ''), '_')[0], '_stging')\n",
 											"type": "Expression"
 										},
 										"schemaname": {
