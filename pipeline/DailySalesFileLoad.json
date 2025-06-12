@@ -40,6 +40,29 @@
 						"type": "DelimitedTextReadSettings"
 					}
 				}
+			},
+			{
+				"name": "Filter CSV Files",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "Get FileNames",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get FileNames').output.childItems",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@endswith(item(),'.csv')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
