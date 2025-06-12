@@ -186,8 +186,9 @@
 				"type": "string",
 				"defaultValue": "DailyFiles"
 			},
-			"TargetFolder": {
-				"type": "string"
+			"Schema": {
+				"type": "string",
+				"defaultValue": "dbo"
 			}
 		},
 		"variables": {
