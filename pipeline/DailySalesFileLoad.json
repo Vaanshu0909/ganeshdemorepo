@@ -110,7 +110,14 @@
 						{
 							"name": "Copy data from file to table",
 							"type": "Copy",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "Truncate tables",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -169,9 +176,45 @@
 							"outputs": [
 								{
 									"referenceName": "SalesDailyFilesLoadTables",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"schema": {
+											"value": "@pipeline().parameters.Schema",
+											"type": "Expression"
+										},
+										"tablename": {
+											"value": "@concat(replace(item().name, '.csv', ''), '_stge')",
+											"type": "Expression"
+										}
+									}
 								}
 							]
+						},
+						{
+							"name": "Truncate tables",
+							"type": "Script",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"linkedServiceName": {
+								"referenceName": "LsSSMS",
+								"type": "LinkedServiceReference"
+							},
+							"typeProperties": {
+								"scripts": [
+									{
+										"type": "Query",
+										"text": "TRUNCATE TABLE customer_stge;\nTRUNCATE TABLE order_stge;\nTRUNCATE TABLE payment_stge;\n"
+									}
+								],
+								"scriptBlockExecutionTimeout": "02:00:00"
+							}
 						}
 					]
 				}
