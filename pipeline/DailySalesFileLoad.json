@@ -63,6 +63,30 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "Set variable save files",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Filter CSV Files",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "FileNames",
+					"value": {
+						"value": "@activity('Filter CSV Files').output.value",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
