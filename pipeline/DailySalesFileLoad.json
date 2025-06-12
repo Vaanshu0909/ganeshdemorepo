@@ -17,9 +17,21 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "SalesGetMetadataDS",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": {
+								"value": "@pipeline().parameters.Container",
+								"type": "Expression"
+							},
+							"Folder": {
+								"value": "@pipeline().parameters.SourceFolder",
+								"type": "Expression"
+							}
+						}
 					},
-					"fieldList": [],
+					"fieldList": [
+						"childItems"
+					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"enablePartitionDiscovery": false
@@ -30,6 +42,24 @@
 				}
 			}
 		],
+		"parameters": {
+			"Container": {
+				"type": "string",
+				"defaultValue": "input"
+			},
+			"SourceFolder": {
+				"type": "string",
+				"defaultValue": "DailyFiles"
+			},
+			"TargetFolder": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"FileNames": {
+				"type": "Array"
+			}
+		},
 		"annotations": []
 	}
 }
